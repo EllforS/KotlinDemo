@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion basic.compileSdkVersion
+    buildToolsVersion basic.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.ellfors.kotlindemo"
+        minSdkVersion basic.minSdkVersion
+        targetSdkVersion basic.targetSdkVersion
+        versionCode basic.versionCode
+        versionName basic.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation support.V7
+    implementation support.RecyclerView
+    implementation support.Constraint
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
+    //Dagger2
+    implementation openlibrary.Dagger2
+    kapt openlibrary.Dagger2_Compiler
+    //RxJava
+    implementation openlibrary.RxJava
+    implementation openlibrary.RxAndroid
+    //Retrofit
+    implementation openlibrary.Retrofit
+    implementation openlibrary.Retrofit_Converter_Json
+    implementation openlibrary.Retrofit_Converter_Scalars
+    implementation openlibrary.Retrofit_RxJava_Adapter
+    implementation openlibrary.RetrofitLogger
+    //Gson
+    implementation openlibrary.Gson
+    //Glide
+    implementation openlibrary.Glide
+}
+repositories {
+    mavenCentral()
+}
