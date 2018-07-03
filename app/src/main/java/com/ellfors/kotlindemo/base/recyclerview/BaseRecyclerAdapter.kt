@@ -10,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.ellfors.kotlindemo.extension.ImageExt
+import com.ellfors.kotlindemo.extension.ToastExt
+import com.ellfors.kotlindemo.extension.ValueExt
 import java.util.*
 
 /**
  * RecyclerView适配器基类
  */
-abstract class BaseRecyclerAdapter(var mContext: Context, var items: MutableList<BaseRecyclerData>?) : RecyclerView.Adapter<BaseRecyclerViewHolder>(), ImageExt
+abstract class BaseRecyclerAdapter
+(var mContext: Context, var items: MutableList<BaseRecyclerData>?) :
+        RecyclerView.Adapter<BaseRecyclerViewHolder>(), ImageExt, ValueExt, ToastExt
 {
     protected var mInflater: LayoutInflater? = null
     var mListener: OnItemClickListener? = null

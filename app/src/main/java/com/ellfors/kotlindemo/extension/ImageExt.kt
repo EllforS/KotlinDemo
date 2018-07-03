@@ -30,7 +30,7 @@ interface ImageExt
                         .apply(RequestOptions().centerCrop())
                         .into(this)
             }
+            else -> setImageResource(0)
         }
     }
-
 }

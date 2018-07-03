@@ -8,12 +8,13 @@ import com.ellfors.kotlindemo.di.component.FragmentComponent
 import com.ellfors.kotlindemo.di.module.FragmentModule
 import com.ellfors.kotlindemo.extension.ImageExt
 import com.ellfors.kotlindemo.extension.ToastExt
+import com.ellfors.kotlindemo.extension.ValueExt
 
 /**
  * BaseFragment
  * 2018/6/22 12:00
  */
-abstract class BaseFragment : Fragment(), ImageExt, ToastExt
+abstract class BaseFragment : Fragment(), ImageExt, ToastExt, ValueExt
 {
     lateinit var mContext: Fragment
 

@@ -14,9 +14,9 @@ interface ToastExt
     {
         when (this)
         {
-            is Activity -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-            is Fragment -> Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-            else -> Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            is Activity -> if (!msg.isNullOrBlank()) Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            is Fragment -> if (!msg.isNullOrBlank()) Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+            else -> if (!msg.isNullOrBlank()) Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -44,9 +44,10 @@ class SecondActivity : BaseActivity(), FuliContract.View, OnItemClickListener
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-
+        //注入
         getActivityComponent().inject(this)
         mPresenter.attachView(this)
+        //初始化控件
         initView()
     }
 
@@ -58,6 +59,7 @@ class SecondActivity : BaseActivity(), FuliContract.View, OnItemClickListener
 
     private fun initView()
     {
+        //初始化RecyclerView
         mAdapter = SecondAdapter(this, list)
         rcv_second.layoutManager = GridLayoutManager(this, 2)
         rcv_second.adapter = mAdapter
@@ -66,25 +68,35 @@ class SecondActivity : BaseActivity(), FuliContract.View, OnItemClickListener
         mPresenter.getList()
     }
 
+    /**
+     * RecyclerView Item点击事件
+     */
     override fun onItemClick(view: View, position: Int, bean: BaseRecyclerData)
     {
         when (view.id)
         {
-            R.id.iv_item_sencond -> showToast("第${position + 1}张图片")
+            R.id.iv_item_sencond -> showToast("第${position add 1}张图片")
         }
     }
 
+    /**
+     * 获取图片列表成功
+     */
     override fun showList(data: List<FuliResponse>?)
     {
         list.addAll(data?.map { BaseRecyclerData(it, TYPE_ITEM) } as Iterable<BaseRecyclerData>)
         mAdapter?.setData(list)
     }
 
-    override fun showFuli(beam: FuliResponse?)
+    /**
+     * 获取图片列表失败
+     */
+    override fun showError(msg: String?)
     {
+        showToast(msg)
     }
 
-    override fun showError(msg: String?)
+    override fun showFuli(beam: FuliResponse?)
     {
     }
 }
