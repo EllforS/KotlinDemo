@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import com.ellfors.kotlindemo.base.BaseActivity
+import com.ellfors.kotlindemo.http.model.response.FuliResponse
 import com.ellfors.kotlindemo.presenter.contract.FuliContract
 import com.ellfors.kotlindemo.presenter.impl.FuliPresenterImpl
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,10 +39,9 @@ class MainActivity : BaseActivity(), FuliContract.View
         getActivityComponent().inject(this@MainActivity)
         fuliPresenter.attachView(this@MainActivity)
         //显示图片
-        //Kotlin的kotlin-android-extensions框架可以直接找到相关id的view
-        //不需要绑定了，很好用，就是写onclick方法的时候比较蛋疼，没有ButterKnife那种统一管理的方法
-        //我还在找解决方法
         iv_local.displayImg(R.drawable.timg)
+        iv_local.setOnClickListener({ SecondActivity.start(this@MainActivity) })
+        //获取网络图片
         fuliPresenter.getFuli()
         //装载Fragment
         initFragment()
@@ -58,9 +58,9 @@ class MainActivity : BaseActivity(), FuliContract.View
     /**
      * 获取网络图片成功
      */
-    override fun showFuli(img: String?)
+    override fun showFuli(bean: FuliResponse?)
     {
-        imageUrl = img
+        imageUrl = bean?.url
         //显示图片
         iv_net.displayImg(imageUrl)
     }
@@ -71,5 +71,9 @@ class MainActivity : BaseActivity(), FuliContract.View
     override fun showError(errorMsg: String?)
     {
         showToast(errorMsg)
+    }
+
+    override fun showList(data: List<FuliResponse>?)
+    {
     }
 }

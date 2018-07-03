@@ -2,6 +2,7 @@ package com.ellfors.kotlindemo.di.component
 
 import android.app.Activity
 import com.ellfors.kotlindemo.MainActivity
+import com.ellfors.kotlindemo.SecondActivity
 import com.ellfors.kotlindemo.di.ActivityScope
 import com.ellfors.kotlindemo.di.module.ActivityModule
 import dagger.Component
@@ -16,4 +17,5 @@ interface ActivityComponent
     fun activity(): Activity
 
     fun inject(activity: MainActivity)
+    fun inject(activity: SecondActivity)
 }

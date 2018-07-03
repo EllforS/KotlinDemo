@@ -1,5 +1,6 @@
 package com.ellfors.kotlindemo.presenter.impl
 
+import com.ellfors.kotlindemo.base.BasePresenterImpl
 import com.ellfors.kotlindemo.base.BaseSubscriber
 import com.ellfors.kotlindemo.http.HttpManager
 import com.ellfors.kotlindemo.http.model.response.FuliResponse
@@ -10,10 +11,8 @@ import javax.inject.Inject
 /**
  * 获取网络图片逻辑类
  */
-class FuliPresenterImpl @Inject constructor(private val manager: HttpManager) : FuliContract.Presenter
+class FuliPresenterImpl @Inject constructor(private val manager: HttpManager) : BasePresenterImpl<FuliContract.View>(), FuliContract.Presenter
 {
-    var mView: FuliContract.View? = null
-
     /* 弄俩随机数  省的每次都一样  蛋疼 */
     private val limit: Int = (Math.random() * 20 + 1).toInt()
     private val page: Int = (Math.random() * 10 + 1).toInt()
@@ -31,7 +30,7 @@ class FuliPresenterImpl @Inject constructor(private val manager: HttpManager) : 
                            {
                                override fun onSuccess(t: List<FuliResponse>?)
                                {
-                                   mView?.showFuli(t?.get(0)?.url)
+                                   mView?.showFuli(t?.get(0))
                                }
 
                                override fun onFailed(e: Exception)
@@ -41,20 +40,23 @@ class FuliPresenterImpl @Inject constructor(private val manager: HttpManager) : 
                            })
     }
 
-    /**
-     * 绑定View，正常要写在父类中，懒得动弹就放这了
-     */
-    override fun attachView(view: FuliContract.View)
+    override fun getList()
     {
-        mView = view
-    }
+        manager.getGsonHttpApi()
+                .getFuLi(20, 10)
+                .compose(RxUtils.handleResult())
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribe(object : BaseSubscriber<List<FuliResponse>>()
+                           {
+                               override fun onSuccess(t: List<FuliResponse>?)
+                               {
+                                   mView?.showList(t)
+                               }
 
-    /**
-     * 解绑
-     */
-    override fun detachView()
-    {
-        mView = null
+                               override fun onFailed(e: Exception)
+                               {
+                                   mView?.showError(e.message)
+                               }
+                           })
     }
-
 }

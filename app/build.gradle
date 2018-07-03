@@ -32,7 +32,6 @@ dependencies {
     implementation support.V7
     implementation support.RecyclerView
     implementation support.Constraint
-
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
     //Dagger2
@@ -44,13 +43,15 @@ dependencies {
     //Retrofit
     implementation openlibrary.Retrofit
     implementation openlibrary.Retrofit_Converter_Json
-    implementation openlibrary.Retrofit_Converter_Scalars
     implementation openlibrary.Retrofit_RxJava_Adapter
     implementation openlibrary.RetrofitLogger
     //Gson
     implementation openlibrary.Gson
     //Glide
     implementation openlibrary.Glide
+    //ButterKnife
+    implementation openlibrary.ButterKnife
+    kapt openlibrary.ButterKnife_Compiler
 }
 repositories {
     mavenCentral()

@@ -1,17 +1,19 @@
 package com.ellfors.kotlindemo.presenter.contract
 
-class FuliContract
+import com.ellfors.kotlindemo.base.BaseView
+import com.ellfors.kotlindemo.http.model.response.FuliResponse
+
+open class FuliContract
 {
-    interface View
+    interface View : BaseView
     {
-        fun showFuli(img: String?)
-        fun showError(errorMsg: String?)    //这个方法也可以放在父类中，抛出自定义的异常供业务层处理
+        fun showFuli(beam: FuliResponse?)
+        fun showList(data: List<FuliResponse>?)
     }
 
     interface Presenter
     {
         fun getFuli()
-        fun attachView(view: View)
-        fun detachView()
+        fun getList()
     }
 }

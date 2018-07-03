@@ -1,7 +1,8 @@
 package com.ellfors.kotlindemo.extension
 
 import android.app.Activity
-import android.app.Fragment
+import android.content.Context
+import android.support.v4.app.Fragment
 import android.widget.Toast
 
 /**
@@ -9,23 +10,13 @@ import android.widget.Toast
  */
 interface ToastExt
 {
-    fun Activity.showToast(msg: String?)
+    fun Context.showToast(msg: String?)
     {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    fun Activity.showToast(msg: Int)
-    {
-        Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show()
-    }
-
-    fun Fragment.showToast(msg: String?)
-    {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    fun Fragment.showToast(msg: Int)
-    {
-        Toast.makeText(activity, msg.toString(), Toast.LENGTH_SHORT).show()
+        when (this)
+        {
+            is Activity -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            is Fragment -> Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+            else -> Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 }
